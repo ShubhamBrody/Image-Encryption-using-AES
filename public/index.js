@@ -1,6 +1,7 @@
 const imageUploadLabel = $(".image-input");
 const encryptBtn = $(".btn-encrypt");
 const decryptBtn = $(".btn-decrypt");
+const progress = $(".progress");
 const textArea = $(".imageText");
 const logsarea = $(".logs");
 // console.log("HJDHFSJF<JKDSKFNJD");
@@ -223,6 +224,8 @@ logsarea.val(logsarea.val() + "\n\n" + "Encryption keys are : " + EXPKEYS);
 let ENCRYPTEDDATA = [];
 let DECRYPTEDDATA = [];
 
+let progressCount = 0;
+
 let imageFile = null;
 
 imageUploadLabel.on("change", (e) => {
@@ -239,7 +242,7 @@ imageUploadLabel.on("change", (e) => {
   };
   logsarea.val(logsarea.val() + "\n\n" + "The file name is : " + e.target.files[0].name);
   $("#text-name").html(e.target.files[0].name);
-  reader.readAsDataURL(e.target.files[0]); 
+  reader.readAsDataURL(e.target.files[0]);
 });
 
 let lengthOfImageFile = 0;
@@ -250,7 +253,6 @@ encryptBtn.on("click", async(e) => {
   if (!imageFile) {
     return;
   }
-
   imageFile = ConvertStringToNum(imageFile);
 
   console.log("Logging here : ", imageFile);
@@ -399,6 +401,9 @@ async function AES_Encrypt(state) {
   state = AddRoundKey(state, 160);
   // logsarea.val(logsarea.val() + "\n" + "Round : " + 10 + " : After Add Round Key : \n" + state);
   ENCRYPTEDDATA = [...ENCRYPTEDDATA, ...state];
+  // progressCount += 100 / lengthOfImageFile;
+  // await progress.html(`PROGRESS = ${progressCount}%`);
+
   // console.log("After all this ... the encrypted message is... :\n ", state);
 }
 
